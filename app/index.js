@@ -1,26 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import game from './reducers'
+import store from './store';
 import HeadsUpContainer from './containers/HeadsUpContainer';
+import onKeyDown from './controllers/keyboard';
 
-const store = createStore(game);
+document.onkeydown = onKeyDown;
 
 function Game() {
 	return (
 		<div>
 			<HeadsUpContainer />
-			<button onClick={
-				function() {
-					console.log('initial state:');
-					console.log(store.getState());
-					store.dispatch({
-						type: 'EXPEND_ENERGY'
-					})
-					console.log('new state:');
-					console.log(store.getState());
-				}
-			}>
+			<button>
 				decrease health
 			</button>
 		</div>
