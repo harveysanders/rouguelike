@@ -1,10 +1,15 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import { createStore } from 'redux';
+
+import HeadsUpContainer from './containers/HeadsUpContainer';
+
 
 function Game() {
 	return (
 		<div>
-			Game
+			<HeadsUpContainer />
 		</div>
 	);
 }
