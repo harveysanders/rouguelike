@@ -6,16 +6,12 @@ import onKeyDown from './controllers/keyboard';
 
 document.onkeydown = onKeyDown;
 
-function Game() {
-	return (
-			<GameContainer />
-	);
+const render = () => {
+	ReactDOM.render(
+		<GameContainer />,
+		document.getElementById('app')
+	);	
 }
 
-ReactDOM.render(
-	<Game />,
-	document.getElementById('app')
-);
-
-Game();
-store.subscribe(Game);
+render();
+store.subscribe(render);
