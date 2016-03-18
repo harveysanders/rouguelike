@@ -1,12 +1,28 @@
 import React from 'react';
-import styles from '../styles'
+import styles from '../styles';
+import Cell from './Cell';
 
-function MapView(props) {
-	return (
-		<div className='text-center' style={styles.mapView}>
-			MapView
+function MapView({cells}) {
+	return (cells) ?
+	(
+		<div style={styles.mapView}>
+			{cells.map(rows =>
+				rows.map(cell => (
+					<Cell
+						key={cell.xCoor + ', ' + cell.yCoor}
+						x={cell.xCoor}
+						y={cell.yCoor}
+						size={cell.size}
+					/>
+				)
+			)
+		)}
 		</div>
-	);
+	)
+	: <div>
+			<div style={styles.cell}></div>
+			<div style={styles.cell}></div>
+		</div>;
 }
 
 export default MapView;
