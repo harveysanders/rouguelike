@@ -1,14 +1,5 @@
 import store from '../store';
-
-function expendEnergy() {
-	console.log('------initial state: --------');
-	console.log(store.getState());
-	store.dispatch({
-		type: 'EXPEND_ENERGY'
-	})
-	console.log('new state:');
-	console.log(store.getState());
-}
+import dispatchWithLog from '../utils/dispatchWithLog';
 
 function onKeyDown(event) {
 	if (!event)
@@ -19,24 +10,35 @@ function onKeyDown(event) {
 	switch(code) {
 	case 37:
 		//LEFT arrow key
-		console.log('LEFT key');
-		expendEnergy();
+		store.dispatch({
+			type: 'MOVE',
+			direction: 'LEFT'
+		});
+		dispatchWithLog('CREATE_MAP');
 		break;
 	case 38:
 		//UP arrow key
-		console.log('UP key');
-		expendEnergy();
+		store.dispatch({
+			type: 'MOVE',
+			direction: 'UP'
+		});
+		dispatchWithLog('CREATE_MAP');
 		break;
 	case 39:
 		//RIGHT arrow key
-		console.log('RIGHT key');
-		expendEnergy();
-		// logDispatch('INCREMENT_GENERATION');
+		store.dispatch({
+			type: 'MOVE',
+			direction: 'RIGHT'
+		});
+		dispatchWithLog('CREATE_MAP');
 		break;
 	case 40:
 		//DOWN arrow key
-		console.log('DOWN key');
-		expendEnergy();
+		store.dispatch({
+			type: 'MOVE',
+			direction: 'DOWN'
+		});
+		dispatchWithLog('CREATE_MAP');
 		break;
 	}
 	// event.preventDefault();

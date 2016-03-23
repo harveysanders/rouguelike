@@ -8,8 +8,12 @@ const initialState = {
 	currMap: {
 		width: 800,
 		height: 600,
-		cellSize: 100,
-		cells:[[]]
+		cellSize: 40,
+		cells:[[]],
+		playerCoords: {
+			x: 0,
+			y: 0
+		},
 	}
 }
 
@@ -17,6 +21,41 @@ function health(state = 100, action) {
 	switch (action.type) {
 		case 'EXPEND_ENERGY':
 			return state = state - 1;
+	}
+}
+
+function playerCoords(state = {x: 0, y: 0}, action) {
+	switch (action.direction) {
+		case 'LEFT': {
+			return Object.assign(
+				{}, 
+				state, 
+				{x: state.x === 0 ? 0 : state.x - 1}
+			);
+		}
+		case 'RIGHT': {
+			return Object.assign(
+				{},
+				state,
+				{x: state.x + 1}
+			);
+		}
+		case 'UP': {
+			return Object.assign(
+				{},
+				state,
+				{y: state.y === 0 ? 0 : state.y - 1}
+			);
+		}
+		case 'DOWN': {
+			return Object.assign(
+				{},
+				state,
+				{y: state.y + 1}
+			);
+		}
+		default:
+			return state;
 	}
 }
 
@@ -33,7 +72,8 @@ function currMap(state = {}, action) {
 					newCells[y][x] = {
 						xCoor: x,
 						yCoor: y,
-						size: state.cellSize
+						size: state.cellSize,
+						isPlayer: x === state.playerCoords.x && y === state.playerCoords.y
 					};
 				}
 			}
@@ -43,6 +83,13 @@ function currMap(state = {}, action) {
 				{cells: newCells}
 			);
 		}
+
+		case 'MOVE':
+			return Object.assign(
+				{}, 
+				state, 
+				{playerCoords: playerCoords(state.playerCoords, action)}
+			);
 		default:
 			return state;
 	}
@@ -57,11 +104,13 @@ export default function game(state = initialState, action) {
 					{health: health(state.health, action)}
 				);
 		case 'CREATE_MAP':
+		case 'MOVE':
+			console.log('move');
 			return Object.assign(
-					{},
-					state,
-					{currMap: currMap(state.currMap, action)}
-				);
+				{}, 
+				state, 
+				{currMap: currMap(state.currMap, action)}
+			);
 		default:
 			return state;
 	};

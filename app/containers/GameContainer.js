@@ -2,16 +2,7 @@ import React from 'react';
 import HeadsUpContainer from './HeadsUpContainer';
 import MapContainer from './MapContainer';
 import store from '../store';
-
-function dispatchWithLog(action){
-	console.log('----orig state:----');
-	console.log(store.getState());
-	console.log('dispatching: ', action);
-	store.dispatch({type: action})
-	console.log('-----new state:----');
-	console.log(store.getState());
-	console.log('-------------------');
-}
+import dispatchWithLog from '../utils/dispatchWithLog';
 
 const GameContainer = React.createClass({
 	render: function() {

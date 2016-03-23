@@ -13,6 +13,7 @@ function MapView({cells}) {
 						x={cell.xCoor}
 						y={cell.yCoor}
 						size={cell.size}
+						isPlayer={cell.isPlayer}
 					/>
 				)
 			)

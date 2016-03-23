@@ -6,11 +6,6 @@ const styles = {
 		height: '600px',
 		// border: 'solid black 1px',
 	},
-	cell: {
-		width: '10px',
-		height: '10px',
-		border: 'solid black 1px',
-	}
 }
 
 export default styles;
