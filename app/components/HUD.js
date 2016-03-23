@@ -1,9 +1,14 @@
 import React from 'react';
 
-function HUD(props) {
+function HUD({gameState}) {
 	return (
 		<div>
-			Health: Weapon: Attack: Level: Next Level: Dungeon:
+			<div>Health: {gameState.health}</div> 
+			<div>Weapon: {gameState.weapon}</div> 
+			<div>Attack: {gameState.attack}</div> 
+			<div>Level: {gameState.level} </div>
+			<div>Next Level: {gameState.nextLevelAt}</div>
+			<div>Dungeon: {gameState.dungeon}</div>
 		</div>
 	)
 }
