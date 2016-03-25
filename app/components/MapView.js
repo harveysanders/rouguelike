@@ -14,6 +14,7 @@ function MapView({cells}) {
 						y={cell.yCoor}
 						size={cell.size}
 						isPlayer={cell.isPlayer}
+						isWall={cell.isWall}
 					/>
 				)
 			)

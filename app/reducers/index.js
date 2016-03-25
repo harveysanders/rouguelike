@@ -73,7 +73,8 @@ function currMap(state = {}, action) {
 						xCoor: x,
 						yCoor: y,
 						size: state.cellSize,
-						isPlayer: x === state.playerCoords.x && y === state.playerCoords.y
+						isPlayer: x === state.playerCoords.x && y === state.playerCoords.y,
+						isWall: Math.random() > 0.8 ? true : false,
 					};
 				}
 			}

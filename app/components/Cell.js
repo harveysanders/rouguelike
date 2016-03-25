@@ -1,17 +1,16 @@
 import React from 'react';
 import styles from '../styles';
 
-const Cell = ({x, y, size, isPlayer}) => (
-		<div
-			style={{
-				height: size,
-				width: size,
-				border: '1px solid black',
-				background: isPlayer ? 'blue' : 'white' 
-			}}
-			className='cell'>
-			
-		</div>
-	);
+const Cell = ({x, y, size, isPlayer, isWall, cssClass}) => (
+	<div
+		style={{
+			height: size,
+			width: size,
+			background: isPlayer ? 'blue' : isWall ? 'grey' : 'white'
+		}}
+		className={cssClass}>
+		
+	</div>
+);
 
 export default Cell;
