@@ -65,6 +65,7 @@ function cells(state = [], action) {
 	switch (action.type) {
 		case 'MOVE': {
 			let playerPosition = {x: null, y: null};
+			let moveToCell = null;
 			let newState = state.map( (row, y) => {
 				return row.map( (cell, x) => {
 					let newCell = Object.assign({}, cell);
@@ -78,27 +79,35 @@ function cells(state = [], action) {
 			});
 			switch (action.direction) {
 				case 'LEFT':
-					playerPosition.x === 0
-						? newState[playerPosition.y][playerPosition.x].isPlayer = true
-						: newState[playerPosition.y][playerPosition.x - 1].isPlayer = true;
+					moveToCell = newState[playerPosition.y][playerPosition.x - 1];
+					moveToCell && !moveToCell.isWall
+						? moveToCell.isPlayer = true
+						: newState[playerPosition.y][playerPosition.x].isPlayer = true
+						
 					break;
 				
 				case 'RIGHT':
-					playerPosition.x === state[0].length - 1
-						? newState[playerPosition.y][playerPosition.x].isPlayer = true
-						: newState[playerPosition.y][playerPosition.x + 1].isPlayer = true;
+					moveToCell = newState[playerPosition.y][playerPosition.x + 1];
+					moveToCell && !moveToCell.isWall
+						? moveToCell.isPlayer = true
+						: newState[playerPosition.y][playerPosition.x].isPlayer = true
+						
 					break;
 				
 				case 'UP':
-					playerPosition.y === 0
-						? newState[playerPosition.y][playerPosition.x].isPlayer = true
-						: newState[playerPosition.y - 1][playerPosition.x].isPlayer = true;
+					moveToCell = newState[playerPosition.y - 1][playerPosition.x];
+					moveToCell && !moveToCell.isWall
+						? moveToCell.isPlayer = true
+						: newState[playerPosition.y][playerPosition.x].isPlayer = true
+						
 					break;
 			
 				case 'DOWN':
-					playerPosition.y === state.length - 1
-						? newState[playerPosition.y][playerPosition.x].isPlayer = true
-						: newState[playerPosition.y + 1][playerPosition.x].isPlayer = true;
+					moveToCell = newState[playerPosition.y + 1][playerPosition.x];
+					moveToCell && !moveToCell.isWall
+						? moveToCell.isPlayer = true
+						: newState[playerPosition.y][playerPosition.x].isPlayer = true
+						
 					break;
 				
 			}
