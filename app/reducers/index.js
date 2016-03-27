@@ -17,6 +17,8 @@ const initialState = {
 	}
 }
 
+//move player movement functionalilty to cells reducer
+
 function health(state = 100, action) {
 	switch (action.type) {
 		case 'EXPEND_ENERGY':
@@ -24,35 +26,75 @@ function health(state = 100, action) {
 	}
 }
 
-function playerCoords(state = {x: 0, y: 0}, action) {
-	switch (action.direction) {
-		case 'LEFT': {
-			return Object.assign(
-				{}, 
-				state, 
-				{x: state.x === 0 ? 0 : state.x - 1}
-			);
-		}
-		case 'RIGHT': {
-			return Object.assign(
-				{},
-				state,
-				{x: state.x + 1}
-			);
-		}
-		case 'UP': {
-			return Object.assign(
-				{},
-				state,
-				{y: state.y === 0 ? 0 : state.y - 1}
-			);
-		}
-		case 'DOWN': {
-			return Object.assign(
-				{},
-				state,
-				{y: state.y + 1}
-			);
+// function playerCoords(state = {x: 0, y: 0}, action) {
+// 	switch (action.direction) {
+// 		case 'LEFT': {
+// 			return Object.assign(
+// 				{}, 
+// 				state, 
+// 				{x: state.x === 0 ? 0 : state.x - 1}
+// 			);
+// 		}
+// 		case 'RIGHT': {
+// 			return Object.assign(
+// 				{},
+// 				state,
+// 				{x: state.x + 1}
+// 			);
+// 		}
+// 		case 'UP': {
+// 			return Object.assign(
+// 				{},
+// 				state,
+// 				{y: state.y === 0 ? 0 : state.y - 1}
+// 			);
+// 		}
+// 		case 'DOWN': {
+// 			return Object.assign(
+// 				{},
+// 				state,
+// 				{y: state.y + 1}
+// 			);
+// 		}
+// 		default:
+// 			return state;
+// 	}
+// }
+
+function cells(state = [], action) {
+	switch (action.type) {
+		case 'MOVE': {
+			let playerPosition = {x: null, y: null};
+			let newState = state.map( (row, y) => {
+				return row.map( (cell, x) => {
+					let newCell = Object.assign({}, cell);
+					if (cell.isPlayer) {
+						console.log('player @ (' + x + ', ' + y + ')');
+						playerPosition = {x: x, y: y};
+						newCell.isPlayer = false;
+					}
+					return newCell;
+				});
+			});
+			switch (action.direction) {
+				case 'LEFT':
+					newState[playerPosition.y][playerPosition.x - 1].isPlayer = true;
+					break;
+				
+				case 'RIGHT':
+					newState[playerPosition.y][playerPosition.x + 1].isPlayer = true;
+					break;
+				
+				case 'UP': 
+					newState[playerPosition.y - 1][playerPosition.x].isPlayer = true;
+					break;
+			
+				case 'DOWN': 
+					newState[playerPosition.y + 1][playerPosition.x].isPlayer = true;
+					break;
+				
+			}
+			return newState;
 		}
 		default:
 			return state;
@@ -84,13 +126,18 @@ function currMap(state = {}, action) {
 				{cells: newCells}
 			);
 		}
-
 		case 'MOVE':
 			return Object.assign(
-				{}, 
-				state, 
-				{playerCoords: playerCoords(state.playerCoords, action)}
+				{},
+				state,
+				{cells: cells(state.cells, action)}
 			);
+		// case 'MOVE':
+		// 	return Object.assign(
+		// 		{}, 
+		// 		state, 
+		// 		{playerCoords: playerCoords(state.playerCoords, action)}
+		// 	);
 		default:
 			return state;
 	}
@@ -100,10 +147,10 @@ export default function game(state = initialState, action) {
 	switch (action.type) {
 		case 'EXPEND_ENERGY':
 			return Object.assign(
-					{},
-					state,
-					{health: health(state.health, action)}
-				);
+				{},
+				state,
+				{health: health(state.health, action)}
+			);
 		case 'CREATE_MAP':
 		case 'MOVE':
 			console.log('move');
