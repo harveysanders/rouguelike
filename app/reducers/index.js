@@ -78,19 +78,27 @@ function cells(state = [], action) {
 			});
 			switch (action.direction) {
 				case 'LEFT':
-					newState[playerPosition.y][playerPosition.x - 1].isPlayer = true;
+					playerPosition.x === 0
+						? newState[playerPosition.y][playerPosition.x].isPlayer = true
+						: newState[playerPosition.y][playerPosition.x - 1].isPlayer = true;
 					break;
 				
 				case 'RIGHT':
-					newState[playerPosition.y][playerPosition.x + 1].isPlayer = true;
+					playerPosition.x === state[0].length - 1
+						? newState[playerPosition.y][playerPosition.x].isPlayer = true
+						: newState[playerPosition.y][playerPosition.x + 1].isPlayer = true;
 					break;
 				
-				case 'UP': 
-					newState[playerPosition.y - 1][playerPosition.x].isPlayer = true;
+				case 'UP':
+					playerPosition.y === 0
+						? newState[playerPosition.y][playerPosition.x].isPlayer = true
+						: newState[playerPosition.y - 1][playerPosition.x].isPlayer = true;
 					break;
 			
-				case 'DOWN': 
-					newState[playerPosition.y + 1][playerPosition.x].isPlayer = true;
+				case 'DOWN':
+					playerPosition.y === state.length - 1
+						? newState[playerPosition.y][playerPosition.x].isPlayer = true
+						: newState[playerPosition.y + 1][playerPosition.x].isPlayer = true;
 					break;
 				
 			}
