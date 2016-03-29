@@ -1,3 +1,5 @@
+import randomInt from '../utils/randomInt';
+
 const initialState = {
 	health: 100,
 	weapon: 'fist',
@@ -14,10 +16,10 @@ const initialState = {
 			x: 0,
 			y: 0
 		},
+		enemies: []
 	}
 }
 
-//move player movement functionalilty to cells reducer
 
 function health(state = 100, action) {
 	switch (action.type) {
@@ -120,7 +122,7 @@ function cells(state = [], action) {
 
 function currMap(state = {}, action) {
 	switch (action.type) {
-		case 'CREATE_MAP': {
+		case 'CREATE_MAP': 
 			let newCells = [];
 			const rows = state.height / state.cellSize;
 			const cols = state.width / state.cellSize;
@@ -134,6 +136,7 @@ function currMap(state = {}, action) {
 						size: state.cellSize,
 						isPlayer: x === state.playerCoords.x && y === state.playerCoords.y,
 						isWall: Math.random() > 0.8 ? true : false,
+						isEnemy: false
 					};
 				}
 			}
@@ -142,7 +145,37 @@ function currMap(state = {}, action) {
 				state, 
 				{cells: newCells}
 			);
-		}
+		case 'CREATE_ENEMIES':
+			let enemies = [];
+			let enemyMap = {}; //easily look up enemies
+			let livingEnemies = action.amount;
+			for (var i = 0; i < action.amount; i++) {
+				let enemy = {x: null, y: null, hp: 1};
+				console.log(randomInt(state.cells[0].length));
+				do {
+					enemy.y = randomInt(state.cells.length);
+					enemy.x = randomInt(state.cells[0].length);
+					console.log('enemyX: ', enemy.x);
+					console.log('enemyY: ', enemy.y);
+					console.log('wall? ', state.cells[enemy.y][enemy.x].isWall)
+				} while ( state.cells[enemy.y][enemy.x].isWall 
+									
+								);
+				enemyMap[enemy.y + '_' + enemy.x] = enemy;
+				enemies.push(enemy);
+			}
+			let updatedCells = state.cells.slice();
+			console.log('enemyMap:', enemyMap);
+			console.log('updatedCells:', updatedCells);
+			for (let e in enemyMap) {
+				updatedCells[enemyMap[e].y][enemyMap[e].x].isEnemy = true;
+			}
+			return Object.assign(
+				{},
+				state,
+				{enemies: enemies},
+				{cells: updatedCells}
+			);
 		case 'MOVE':
 			return Object.assign(
 				{},
@@ -169,8 +202,8 @@ export default function game(state = initialState, action) {
 				{health: health(state.health, action)}
 			);
 		case 'CREATE_MAP':
+		case 'CREATE_ENEMIES':
 		case 'MOVE':
-			console.log('move');
 			return Object.assign(
 				{}, 
 				state, 

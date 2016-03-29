@@ -15,6 +15,7 @@ function MapView({cells}) {
 						size={cell.size}
 						isPlayer={cell.isPlayer}
 						isWall={cell.isWall}
+						isEnemy={cell.isEnemy}
 					/>
 				)
 			)

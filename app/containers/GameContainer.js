@@ -5,20 +5,24 @@ import store from '../store';
 import dispatchWithLog from '../utils/dispatchWithLog';
 
 const GameContainer = React.createClass({
+
 	render: function() {
 		return (
 			<div className='jumbotron text-center'>
 				<HeadsUpContainer />
 				<MapContainer />
 				<button onClick={
-					() => {dispatchWithLog('CREATE_MAP');}
+					() => {dispatchWithLog({type:'CREATE_MAP'});}
 				}>
 					Create Map
 				</button>
 				<button onClick={
-					() => {dispatchWithLog('EXPEND_ENERGY');}
+					() => {dispatchWithLog({
+						type:'CREATE_ENEMIES',
+						amount: 6
+					});}
 				}>
-					expend energy
+					create enemies
 				</button>
 
 			</div>
