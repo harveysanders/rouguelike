@@ -14,7 +14,7 @@ function onKeyDown(event) {
 			type: 'MOVE',
 			direction: 'LEFT'
 		});
-		// dispatchWithLog('UPDATE_MAP');
+		// dispatchWithLog({type:'UPDATE_MAP'});
 		break;
 	case 38:
 		//UP arrow key
@@ -22,7 +22,7 @@ function onKeyDown(event) {
 			type: 'MOVE',
 			direction: 'UP'
 		});
-		// dispatchWithLog('UPDATE_MAP');
+		// dispatchWithLog({type:'UPDATE_MAP'});
 		break;
 	case 39:
 		//RIGHT arrow key
@@ -30,7 +30,7 @@ function onKeyDown(event) {
 			type: 'MOVE',
 			direction: 'RIGHT'
 		});
-		// dispatchWithLog('UPDATE_MAP');
+		// dispatchWithLog({type:'UPDATE_MAP'});
 		break;
 	case 40:
 		//DOWN arrow key
@@ -38,7 +38,7 @@ function onKeyDown(event) {
 			type: 'MOVE',
 			direction: 'DOWN'
 		});
-		// dispatchWithLog('UPDATE_MAP');
+		// dispatchWithLog({type:'UPDATE_MAP'});
 		break;
 	}
 	// event.preventDefault();
