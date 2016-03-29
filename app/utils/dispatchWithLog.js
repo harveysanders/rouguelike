@@ -4,7 +4,7 @@ export default function dispatchWithLog(action){
 	console.log('----orig state:----');
 	console.log(store.getState());
 	console.log('dispatching: ', action);
-	store.dispatch({type: action})
+	store.dispatch(action)
 	console.log('-----new state:----');
 	console.log(store.getState());
 	console.log('-------------------');
